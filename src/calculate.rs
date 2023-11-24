@@ -1,12 +1,12 @@
 use chess::{Board, Color, BoardStatus, MoveGen, ChessMove, ALL_SQUARES, Piece};
 
-pub fn find_best_move(board: &Board, depth: u8) -> (i32, ChessMove) {
+pub fn find_best_move(board: &Board, depth: u8, nodes: &mut u32) -> (i32, ChessMove, u32) {
     let maximizing = board.side_to_move() == Color::White;
-    let (eval, best_move) = calculate(board, depth, i32::MIN, i32::MAX, maximizing);
-    (eval, best_move)
+    let (eval, best_move) = calculate(board, depth, i32::MIN, i32::MAX, maximizing, nodes);
+    (eval, best_move, *nodes)
 }
 
-fn calculate(board: &Board, depth: u8, mut alpha: i32, mut beta: i32, maximizing_player: bool) -> (i32, ChessMove) {
+fn calculate(board: &Board, depth: u8, mut alpha: i32, mut beta: i32, maximizing_player: bool, nodes: &mut u32) -> (i32, ChessMove) {
     if board.status() == BoardStatus::Checkmate {
         return (if maximizing_player { i32::MIN } else { i32::MAX }, ChessMove::default());
     }
@@ -20,8 +20,8 @@ fn calculate(board: &Board, depth: u8, mut alpha: i32, mut beta: i32, maximizing
 
     for mv in MoveGen::new_legal(&board) {
         let new_board = board.make_move_new(mv);
-        let (score, _) = calculate(&new_board, depth - 1, alpha, beta, !maximizing_player);
-
+        let (score, _) = calculate(&new_board, depth - 1, alpha, beta, !maximizing_player, nodes);
+        *nodes += 1;
         if maximizing_player {
             if score > best_score {
                 best_score = score;
