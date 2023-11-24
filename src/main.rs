@@ -2,8 +2,10 @@ use chess::{self, Board};
 
 mod uci;
 mod calculate;
+mod transposition_table;
 
 fn main() {
+
     run_engine();
 }
 
