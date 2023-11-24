@@ -1,9 +1,8 @@
-use chess::{Board, Color, BoardStatus, MoveGen, ChessMove};
+use chess::{Board, Color, BoardStatus, MoveGen, ChessMove, ALL_SQUARES, Piece};
 
 pub fn find_best_move(board: &Board, depth: u8) -> (i32, ChessMove) {
     let maximizing = board.side_to_move() == Color::White;
     let (eval, best_move) = calculate(board, depth, i32::MIN, i32::MAX, maximizing);
-    println!("Evaluation: {}, Best Move: {}", eval, best_move);
     (eval, best_move)
 }
 
@@ -49,6 +48,23 @@ fn calculate(board: &Board, depth: u8, mut alpha: i32, mut beta: i32, maximizing
     (best_score, best_move)
 }
 
-fn evaluate(_board: &Board) -> i32 {
-    return 0;
+fn evaluate(board: &Board) -> i32 {
+    let mut evaluation: i32 = 0;
+    for square in ALL_SQUARES {
+        match (board.piece_on(square), board.color_on(square)) {
+            (Some(Piece::Pawn),   Some(Color::White)) => evaluation += 100,
+            (Some(Piece::Knight), Some(Color::White)) => evaluation += 300,
+            (Some(Piece::Bishop), Some(Color::White)) => evaluation += 300,
+            (Some(Piece::Rook),   Some(Color::White)) => evaluation += 500,
+            (Some(Piece::Queen),  Some(Color::White)) => evaluation += 900,
+            (Some(Piece::Pawn),   Some(Color::Black)) => evaluation -= 100,
+            (Some(Piece::Knight), Some(Color::Black)) => evaluation -= 300,
+            (Some(Piece::Bishop), Some(Color::Black)) => evaluation -= 300,
+            (Some(Piece::Rook),   Some(Color::Black)) => evaluation -= 500,
+            (Some(Piece::Queen),  Some(Color::Black)) => evaluation -= 900,
+            _ => ()
+        }
+    }
+
+    return evaluation;
 }
