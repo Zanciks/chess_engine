@@ -19,7 +19,7 @@ pub fn calculate(board: Board) -> (i32, ChessMove) {
     return (best_eval, best_move);
 }
 
-pub fn minimax(board: Board, depth: u8, mut best_eval: i32) -> i32{
+pub fn minimax(board: Board, depth: u8, mut best_eval: i32) -> i32 {
     if board.status() == BoardStatus::Checkmate {return -i32::MAX } // we can negate MAX, but we CANT negate MIN, so we just use -MAX lol
     if depth == 0 {return evaluate(board)}
 
