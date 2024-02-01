@@ -7,10 +7,10 @@ pub fn find_best_move(board: Board, depth: u8) -> (i32, ChessMove) {
     let maximizing = if board.side_to_move() == Color::White {true} else {false};
 
 
-    return minimax(board, depth);
+    return minimax(board, depth, -i32::MAX, i32::MAX);
 }
 
-pub fn minimax(board: Board, depth: u8) -> (i32, ChessMove) {
+pub fn minimax(board: Board, depth: u8, mut alpha: i32, mut beta: i32) -> (i32, ChessMove) {
     if board.status() == BoardStatus::Checkmate {
         if board.side_to_move() == Color::White {return (-i32::MAX, ChessMove::default())}
         else {return (i32::MAX, ChessMove::default())}
@@ -23,12 +23,15 @@ pub fn minimax(board: Board, depth: u8) -> (i32, ChessMove) {
 
     for mv in MoveGen::new_legal(&board) {
         let new_board = board.make_move_new(mv);
-        let eval = minimax(new_board, depth - 1).0;
+        let eval = minimax(new_board, depth - 1, alpha, beta).0;
         match board.side_to_move() {
             Color::White => {
                 if eval > best_eval {
                     best_eval = eval;
                     best_move = mv;
+                }
+                if best_eval > alpha {
+                    alpha = best_eval;
                 }
             },
             Color::Black => {
@@ -36,7 +39,13 @@ pub fn minimax(board: Board, depth: u8) -> (i32, ChessMove) {
                     best_eval = eval;
                     best_move = mv;
                 }
+                if best_eval < beta {
+                    beta = best_eval
+                }
             }
+        }
+        if alpha >= beta {
+            break; // beta cutoff
         }
     }
     
