@@ -1,16 +1,11 @@
-#![allow(dead_code, unused_variables)]
-
 use chess::{Board, BoardStatus, ChessMove, Color, MoveGen};
 use crate::evaluation::evaluate;
 
 pub fn find_best_move(board: Board, depth: u8) -> (i32, ChessMove) {
-    let maximizing = if board.side_to_move() == Color::White {true} else {false};
-
-
     return minimax(board, depth, -i32::MAX, i32::MAX);
 }
 
-pub fn minimax(board: Board, depth: u8, mut alpha: i32, mut beta: i32) -> (i32, ChessMove) {
+fn minimax(board: Board, depth: u8, mut alpha: i32, mut beta: i32) -> (i32, ChessMove) {
     if board.status() == BoardStatus::Checkmate {
         if board.side_to_move() == Color::White {return (-i32::MAX, ChessMove::default())}
         else {return (i32::MAX, ChessMove::default())}
