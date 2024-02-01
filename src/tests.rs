@@ -33,4 +33,19 @@ mod tests {
         assert_eq!(eval, -2147483647);
         assert_eq!(mv, ChessMove::from_str("e8e2").unwrap());
     }
+
+    #[test]
+    fn mate_in_three() {
+        // https://lichess.org/k1xYI03L/white#84
+        let board = Board::from_str("4R3/1p3p1k/p6p/P4qr1/1P1Q4/6P1/5P1K/8 w - - 2 43").unwrap();
+        let (eval, mv) = find_best_move(board, 5);
+        assert_eq!(eval, 2147483647);
+        assert_eq!(mv, ChessMove::from_str("e8h8").unwrap());
+
+        // https://lichess.org/5hnjSaBo/black#71
+        let board = Board::from_str("6Q1/4kp2/N3p3/1R1p3p/2nPq3/2P3P1/5P1P/5K2 b - - 6 36").unwrap();
+        let (eval, mv) = find_best_move(board, 5);
+        assert_eq!(eval, -2147483647);
+        assert_eq!(mv, ChessMove::from_str("c4d2").unwrap());
+    }
 }
