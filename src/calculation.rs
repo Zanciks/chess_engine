@@ -29,7 +29,6 @@ pub fn negamax(board: Board, depth: u8, mut alpha: i32, beta: i32) -> (i32, Ches
         
         alpha = max(alpha, best_eval);
         if alpha >= beta {break}
-
     }
     return (best_eval, best_move)
 }
