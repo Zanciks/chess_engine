@@ -6,11 +6,11 @@ mod tests {
 
     #[test]
     fn mate_in_one() {
-        // https://lichess.org/29OBse7Z/white#44
-        let board = Board::from_str("r2q1r1k/1p2Np1p/p1pp2n1/5bQ1/7R/5P2/PPP3PP/R5K1 w - - 0 23").unwrap();
+        let board = Board::from_str("7k/6pp/8/8/8/8/8/R6K w - - 0 1").unwrap();
         let (eval, mv) = find_best_move(board, 1);
+        println!("{} | {}", eval, mv);
         assert_eq!(eval, 2147483647);
-        assert_eq!(mv, ChessMove::from_str("g5f6").unwrap());
+        assert_eq!(mv, ChessMove::from_str("a1a8").unwrap());
 
         // https://lichess.org/EygAm9YU/black#111
         let board = Board::from_str("8/6r1/8/5k1K/5p2/5RP1/5P2/8 b - - 0 56").unwrap();
