@@ -5,7 +5,7 @@ use crate::evaluation::evaluate;
 
 pub fn find_best_move(board: Board, depth: u8) -> (i32, ChessMove) {
     let (mut eval, best_move) = negamax(board, depth, -i32::MAX, i32::MAX);
-    if board.side_to_move() == Color::Black {eval *= -1}
+    if board.side_to_move() == Color::Black {eval *= -1} // we use negamax, so have to negate for the user
 
     return (eval, best_move)
 }
