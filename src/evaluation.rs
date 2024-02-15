@@ -20,16 +20,16 @@ pub fn count_material(board: Board) -> i32 {
                     (Piece::Pawn,   Color::White) =>  100,
                     (Piece::Knight, Color::White) =>  300,
                     (Piece::Bishop, Color::White) =>  300,
-                    (Piece::Rook,   Color::White) =>  300,
-                    (Piece::Queen,  Color::White) =>  300,
-                    (Piece::King,   Color::White) =>  300,
+                    (Piece::Rook,   Color::White) =>  500,
+                    (Piece::Queen,  Color::White) =>  500,
 
                     (Piece::Pawn,   Color::Black) => -100,
                     (Piece::Knight, Color::Black) => -300,
                     (Piece::Bishop, Color::Black) => -300,
-                    (Piece::Rook,   Color::Black) => -300,
-                    (Piece::Queen,  Color::Black) => -300,
-                    (Piece::King,   Color::Black) => -300,
+                    (Piece::Rook,   Color::Black) => -500,
+                    (Piece::Queen,  Color::Black) => -900,
+
+                    _ => 0
                 }
             }
         }
