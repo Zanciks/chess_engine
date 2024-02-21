@@ -10,7 +10,7 @@ pub fn find_best_move(board: Board, depth: u8) -> (i32, ChessMove) {
     return (eval, best_move)
 }
 
-pub fn negamax(board: Board, depth: u8, mut alpha: i32, beta: i32) -> (i32, ChessMove) {
+fn negamax(board: Board, depth: u8, mut alpha: i32, beta: i32) -> (i32, ChessMove) {
     if board.status() == BoardStatus::Checkmate {return (-i32::MAX, ChessMove::default())}
 
     if depth == 0 {return (evaluate(board), ChessMove::default())}
@@ -30,5 +30,6 @@ pub fn negamax(board: Board, depth: u8, mut alpha: i32, beta: i32) -> (i32, Ches
         alpha = max(alpha, best_eval);
         if alpha >= beta {break}
     }
-    return (best_eval, best_move)
+
+    (best_eval, best_move)
 }
