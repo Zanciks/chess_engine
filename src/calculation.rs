@@ -34,6 +34,9 @@ fn negamax(board: Board, depth: u8, mut alpha: i32, beta: i32) -> (i32, ChessMov
     (best_eval, best_move)
 }
 
+// this won't ALWAYS save time, but with alpha beta pruning, it CAN
+// we are essentially just looking at more valuable captures first
+// for the mating tests, its saving a ton of time lol
 pub fn sort_moves(board: &Board) -> Vec<ChessMove> {
     let mut vector: Vec<(ChessMove, i32)> = vec![];
     for mv in MoveGen::new_legal(board) {
@@ -59,6 +62,6 @@ pub fn piece_to_i32(piece: Piece) -> i32 {
         Piece::Bishop => 300,
         Piece::Rook => 500,
         Piece::Queen => 900,
-        _ => 0
+        _ => 0 // might be worth changing this to i32::MAX, not sure. /should/ save time, but not really, in practice
     }
 }
