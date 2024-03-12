@@ -48,4 +48,19 @@ mod tests {
         assert_eq!(eval, -2147483647);
         assert_eq!(mv, ChessMove::from_str("c4d2").unwrap());
     }
+
+    #[test]
+    fn mate_in_four() {
+        // https://lichess.org/5AsTxMuG/white#42
+        let board = Board::from_str("6k1/1bqr1p1p/pp3pp1/8/3b4/2P1Q2P/PP3PP1/2B1R1K1 w - - 0 22").unwrap();
+        let (eval, mv) = find_best_move(board, 7);
+        assert_eq!(eval, 2147483647);
+        assert_eq!(mv, ChessMove::from_str("e3e8").unwrap());
+
+        // https://lichess.org/hxVgkJQq/black#63
+        let board = Board::from_str("r4rk1/5p2/3p3Q/q1p2NP1/4PP1P/3P4/1B2n3/1K1R4 b - - 8 32").unwrap();
+        let (eval, mv) = find_best_move(board, 7);
+        assert_eq!(eval, -2147483647);
+        assert_eq!(mv, ChessMove::from_str("a5a2").unwrap());
+    }
 }
