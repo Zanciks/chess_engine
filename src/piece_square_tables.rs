@@ -1,0 +1,10 @@
+pub const WHITE_PAWNS: [i32; 64] = [100; 64];
+pub const BLACK_PAWNS: [i32; 64] = [-100; 64];
+pub const WHITE_KNIGHTS: [i32; 64] = [300; 64];
+pub const BLACK_KNIGHTS: [i32; 64] = [-300; 64];
+pub const WHITE_BISHOPS: [i32; 64] = [300; 64];
+pub const BLACK_BISHOPS: [i32; 64] = [-300; 64];
+pub const WHITE_ROOKS: [i32; 64] = [500; 64];
+pub const BLACK_ROOKS: [i32; 64] = [-500; 64];
+pub const WHITE_QUEENS: [i32; 64] = [900; 64];
+pub const BLACK_QUEENS: [i32; 64] = [-900; 64];
